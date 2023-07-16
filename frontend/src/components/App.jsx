@@ -35,7 +35,7 @@ function App() {
   const [isAuthOk, setIsAuthOk] = useState(false);
   const [isInfoToolTipOpened, setIsInfoToolTipOpened] = useState(false);
 
-  const checkToken = () => {
+  const handleCheckToken = () => {
     const token = localStorage.getItem('token')
     if (token) {
       auth.checkToken(token)
@@ -53,7 +53,7 @@ function App() {
   }
 
   useEffect(() => {
-    checkToken();
+    handleCheckToken();
   }, [isLoggedIn]);
 
   useEffect(() => {
