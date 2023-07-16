@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const { PORT = 3000 } = process.env;
+// const { PORT = 3000 } = process.env;
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { bdUrl } = require('./config');
 
@@ -27,6 +27,6 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Сервер запущен, PORT = ${PORT}`);
+app.listen(3000, () => {
+  console.log(`Сервер запущен, PORT = 3000`);
 });
