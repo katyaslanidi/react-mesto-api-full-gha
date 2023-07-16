@@ -3,8 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const { PORT = 3000 } = process.env;
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { PORT, bdUrl } = require('./config');
+const { bdUrl } = require('./config');
 
 const errorHandler = require('./errors/errorHandler');
 const router = require('./routes');
