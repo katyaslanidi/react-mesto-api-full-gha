@@ -3,9 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-// const { PORT = 3000 } = process.env;
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { bdUrl } = require('./config');
+const { bdUrl, PORT } = require('./config');
 
 const errorHandler = require('./errors/errorHandler');
 const router = require('./routes');
@@ -27,6 +26,6 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(3000, () => {
-  console.log(`Сервер запущен, PORT = 3000`);
+app.listen(PORT, () => {
+  console.log(`Сервер запущен, PORT = ${PORT}`);
 });
