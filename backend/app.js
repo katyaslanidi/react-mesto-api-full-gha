@@ -14,7 +14,8 @@ mongoose.connect(bdUrl);
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/api', require('../router'));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
 app.use(express.json());
