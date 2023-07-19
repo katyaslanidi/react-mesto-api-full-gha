@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
@@ -12,6 +13,8 @@ const router = require('./routes');
 mongoose.connect(bdUrl);
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
 app.use(express.json());

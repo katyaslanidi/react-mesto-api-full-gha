@@ -1,9 +1,6 @@
-import { apiConfig } from "./utils.js";
-
 class Api {
-    constructor({ url, headers }) {
-        this._url = url;
-        this._headers = headers;
+    constructor(options) {
+        this._options = options;
     }
     _getResponse(res) {
         if (res.ok) {
@@ -12,31 +9,41 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
     }
     getUserInfo() {
-        return fetch(`${this._url}/users/me`, {
-            method: "GET",
-            headers: this._headers,
+        return fetch(`${this._options.baseUrl}/users/me`, {
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
         }).then((res) => this._getResponse(res));
     }
     getInitialCards() {
-        return fetch(`${this._url}/cards`, {
-            method: "GET",
-            headers: this._headers,
+        return fetch(`${this._options.baseUrl}/cards`, {
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
         }).then((res) => this._getResponse(res));
     }
     editUserInfo(data) {
-        return fetch(`${this._url}/users/me`, {
+        return fetch(`${this._options.baseUrl}/users/me`, {
             method: "PATCH",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             body: JSON.stringify({
                 name: data.name,
                 about: data.about,
             }),
         }).then((res) => this._getResponse(res));
     }
-    addNewCard({name, link}) {
-        return fetch(`${this._url}/cards`, {
+    addNewCard({ name, link }) {
+        return fetch(`${this._options.baseUrl}/cards`, {
             method: "POST",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             body: JSON.stringify({
                 name,
                 link,
@@ -44,27 +51,39 @@ class Api {
         }).then((res) => this._getResponse(res));
     }
     deleteCard(id) {
-        return fetch(`${this._url}/cards/${id}`, {
+        return fetch(`${this._options.baseUrl}/cards/${id}`, {
             method: "DELETE",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
         }).then((res) => this._getResponse(res));
     }
     addLikeCard(id) {
-        return fetch(`${this._url}/cards/${id}/likes`, {
+        return fetch(`${this._options.baseUrl}/cards/${id}/likes`, {
             method: "PUT",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
         }).then((res) => this._getResponse(res));
     }
     deleteLikeCard(id) {
-        return fetch(`${this._url}/cards/${id}/likes`, {
+        return fetch(`${this._options.baseUrl}/cards/${id}/likes`, {
             method: "DELETE",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
         }).then((res) => this._getResponse(res));
     }
     editProfileImage(avatar) {
-        return fetch(`${this._url}/users/me/avatar`, {
+        return fetch(`${this._options.baseUrl}/users/me/avatar`, {
             method: "PATCH",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             body: JSON.stringify(avatar),
         }).then((res) => this._getResponse(res));
     }
@@ -77,5 +96,7 @@ class Api {
     }
 }
 
-const api = new Api(apiConfig);
+const api = new Api({
+    baseUrl: "http://api.katyaslanidi.mesto.nomoredomains.xyz"
+});
 export default api;
