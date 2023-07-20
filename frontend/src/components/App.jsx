@@ -36,9 +36,9 @@ function App() {
   const [isInfoToolTipOpened, setIsInfoToolTipOpened] = useState(false);
 
   const handleCheckToken = () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      auth.checkToken(token)
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      auth.checkToken(jwt)
         .then((res) => {
           if (res) {
             setIsLoggedIn(true);
@@ -48,7 +48,12 @@ function App() {
             setIsLoggedIn(false);
           }
         })
-        .catch((err) => console.log(`Возникла ошибка: ${err}`));
+        .catch((err) => {
+          if (err.status === 401) {
+            console.log("401 — Токен не передан или передан не в том формате");
+          }
+          console.log("401 — Переданный токен некорректен");
+        });
     }
   }
 
@@ -123,7 +128,9 @@ function App() {
       })
       .catch((err) => {
         setIsAuthOk(false);
-        console.log(err);
+        if (err.status === 400) {
+          console.log("400 - некорректно заполнено одно из полей");
+        }
       })
       .finally(() => setIsInfoToolTipOpened(true));
   }
@@ -134,18 +141,22 @@ function App() {
         setIsLoggedIn(true);
         setUserEmail(email);
         navigate('/');
-        localStorage.setItem('token', res.token);
+        localStorage.setItem('jwt', res.token);
       })
       .catch((err) =>{ 
         setIsAuthOk(false);
         setIsInfoToolTipOpened(true);
-        console.log(err);
+        if (err.status === 400) {
+          console.log("400 - не передано одно из полей");
+        } else if (err.status === 401) {
+          console.log("401 - пользователь с email не найден");
+        }
       });
   }
 
   const handleSingOut = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
   }
 
   const handleEditProfileClick = () => {

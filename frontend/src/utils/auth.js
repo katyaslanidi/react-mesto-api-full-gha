@@ -10,8 +10,7 @@ class Authorization {
     if (res.ok) {
       return res.json();
     }
-
-    return Promise.reject(res);
+    return Promise.reject(`${res.status}`);
   }
 
   register(email, password) {
@@ -37,15 +36,21 @@ class Authorization {
         password: password,
         email: email,
       }),
-    }).then((res) => this._getResponse(res));
-  }
+    }).then((res) => this._getResponse(res))
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+        }
+        return data;
+      });
+  };
 
-  checkToken(token) {
+  checkToken(jwt) {
     return fetch(this._baseUrl + '/users/me', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${jwt}`,
       },
     }).then((res) => this._getResponse(res));
   }

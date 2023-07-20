@@ -1,3 +1,5 @@
+// import { apiConfig } from "./utils";
+
 class Api {
     constructor(options) {
         this._options = options;
@@ -96,7 +98,10 @@ class Api {
     }
 }
 
+// const api = new Api({apiConfig});
+//     // baseUrl: "http://api.katyaslanidi.mesto.nomoredomains.xyz"});
 const api = new Api({
     baseUrl: "http://api.katyaslanidi.mesto.nomoredomains.xyz"
-});
+})
+
 export default api;
