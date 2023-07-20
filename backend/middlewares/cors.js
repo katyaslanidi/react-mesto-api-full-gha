@@ -1,14 +1,14 @@
 const allowedCors = [
-  'https://katyaslanidi.mesto.nomoredomains.xyz/',
-  'http://katyaslanidi.mesto.nomoredomains.xyz/',
-  'https://api.katyaslanidi.mesto.nomoredomains.xyz/',
-  'http://api.katyaslanidi.mesto.nomoredomains.xyz/',
+  'https://katyaslanidi.mesto.nomoredomains.xyz',
+  'http://katyaslanidi.mesto.nomoredomains.xyz',
+  'https://api.katyaslanidi.mesto.nomoredomains.xyz',
+  'http://api.katyaslanidi.mesto.nomoredomains.xyz',
   'https://127.0.0.1:3000',
   'http://127.0.0.1:3001',
-  'https://localhost:3000/',
-  'http://localhost:3000/',
-  'https://localhost:3001/',
-  'http://localhost:3001/'
+  'https://localhost:3000',
+  'http://localhost:3000',
+  'https://localhost:3001',
+  'http://localhost:3001'
 ];
 
 module.exports = (req, res, next) => {
