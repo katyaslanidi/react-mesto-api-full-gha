@@ -7,10 +7,10 @@
 //   errorClass: 'popup__error_active',
 // };
 
-export const apiConfig = {
-  url: 'http://api.katyaslanidi.mesto.nomoredomains.xyz',
-  headers: {
-      "Content-Type": 'application/json',
-      authorization: `${jwt}`,
-  },
-};
+// export const apiConfig = {
+//   url: 'http://api.katyaslanidi.mesto.nomoredomains.xyz',
+//   headers: {
+//       "Content-Type": 'application/json',
+//       authorization: `${jwt}`,
+//   },
+// };

@@ -1,4 +1,3 @@
-// const BASE_URL = 'https://auth.nomoreparties.co';
 const BASE_URL = 'http://api.katyaslanidi.mesto.nomoredomains.xyz';
 
 class Authorization {
