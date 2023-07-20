@@ -15,6 +15,7 @@ class Authorization {
   register(email, password) {
     return fetch(this._baseUrl + '/signup', {
       method: 'POST',
+      credentials: "include",
       headers: {
         'Content-Type': 'application/json',
       },
@@ -22,12 +23,14 @@ class Authorization {
         password: password,
         email: email,
       }),
+      
     }).then((res) => this._getResponse(res));
   }
 
   authorize(email, password) {
     return fetch(this._baseUrl + '/signin', {
       method: 'POST',
+      credentials: "include",
       headers: {
         'Content-Type': 'application/json',
       },
