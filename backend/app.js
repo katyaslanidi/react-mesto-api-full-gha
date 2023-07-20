@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { bdUrl, PORT } = require('./config');
+const cors = require('./middlewares/cors');
 
 const errorHandler = require('./errors/errorHandler');
 const router = require('./routes');
@@ -20,6 +21,8 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors);
 
 app.use(requestLogger);
 
