@@ -24,9 +24,9 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  const { _id: cardId } = req.params;
+  const { cardId } = req.params;
   const userId = req.user._id;
-  Card.findById({ _id: cardId })
+  Card.findById({ cardId })
     .then((card) => {
       if (!card) {
         return next(new NotFound('Пользователь не найден'));

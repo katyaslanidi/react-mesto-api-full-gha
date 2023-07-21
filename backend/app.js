@@ -18,8 +18,6 @@ mongoose.connect(DB_URL, { useNewUrlParser: true })
   .then(() => console.log('Успешное подключение к MongoDB'))
   .catch((err) => console.log('Ошибка подключение:', err));
 
-// app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

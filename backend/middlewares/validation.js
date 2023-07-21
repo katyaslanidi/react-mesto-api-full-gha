@@ -46,7 +46,7 @@ module.exports.createCardValidation = celebrate({
 
 module.exports.deleteCardValidation = celebrate({
   params: Joi.object({
-    _id: Joi.string().length(24).hex().required()
+    cardId: Joi.string().length(24).hex().required()
   })
 });
 
