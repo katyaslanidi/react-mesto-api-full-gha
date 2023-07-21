@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Card = require('../models/card');
-const { BadRequest, NotFound, ForbiddenError } = require('../errors/errors');
+// const { BadRequest, NotFound, ForbiddenError } = require('../errors/errors');
+const BadRequest = require('../errors/BadRequestError');
+const NotFound = require('../errors/NotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
@@ -21,7 +24,6 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  // const userId = req.user._id;
   Card.findById(cardId)
     .then((card) => {
       if (!card) {
@@ -43,9 +45,11 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
+  const { cardId } = req.params;
+  const { userId } = req.user;
   Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
+    cardId,
+    { $addToSet: { likes: userId } },
     { new: true },)
     .then((card) => {
       if (!card) {
@@ -60,10 +64,12 @@ module.exports.likeCard = (req, res, next) => {
     })
 };
 
-module.exports.dislikeCard = (req, res) => {
+module.exports.dislikeCard = (req, res, next) => {
+  const { cardId } = req.params;
+  const { userId } = req.user;
   Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $pull: { likes: req.user._id } },
+    cardId,
+    { $pull: { likes: userId } },
     { new: true },)
     .then((card) => {
       if (!card) {

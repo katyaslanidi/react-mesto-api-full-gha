@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { BadRequest, NotFound, ConflictError, UnauthorizedError } = require('../errors/errors');
+// const { BadRequest, NotFound, ConflictError, UnauthorizedError } = require('../errors/errors');
+const BadRequest = require('../errors/BadRequestError');
+const NotFound = require('../errors/NotFoundError');
+const ConflictError = require('../errors/ConflictError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.registration = (req, res, next) => {

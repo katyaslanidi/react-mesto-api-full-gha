@@ -32,7 +32,7 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
                 {
                     cards.map((card) => (
                         <Card
-                            key={card.cardId}
+                            key={card._id}
                             card={card}
                             onCardClick={onCardClick}
                             onCardLike={onCardLike}

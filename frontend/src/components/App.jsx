@@ -37,40 +37,7 @@ function App() {
 
   const jwt = localStorage.getItem("jwt");
 
-  // const handleCheckToken = () => {
-  //   if (jwt) {
-  //     auth.checkToken(jwt)
-  //       .then((res) => {
-  //         if (res) {
-  //           api.getToken(jwt);
-  //           setIsLoggedIn(true);
-  //           navigate('/');
-  //           setUserEmail(res.email);
-  //         } else {
-  //           setIsLoggedIn(false);
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   handleCheckToken();
-  // }, [isLoggedIn]);
-
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     Promise.all([api.getUserInfo(), api.getInitialCards({ authorization: `Bearer ${jwt}` })])
-  //       .then((res) => {
-  //         setCurrentUser(res.user);
-  //         setCards(res.cards.reverse());
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [isLoggedIn]);
-
-useEffect(() => {
+  useEffect(() => {
     if (jwt) {
       auth.checkToken(jwt)
         .then((res) => {
@@ -82,9 +49,8 @@ useEffect(() => {
         })
         .catch((err) => console.log(err));
 
-      api.getInitialCards({ authorization: `Bearer ${jwt} `})
+      api.getInitialCards({ authorization: `Bearer ${jwt} ` })
         .then((res) => {
-          console.log(typeof res, res);
           setCards(res);
         })
         .catch((err) => console.log(err));
@@ -92,25 +58,22 @@ useEffect(() => {
   }, [jwt]);
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
-    api.changeLikeCardStatus(card.cardId, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((c) => c.cardId === card.cardId ? newCard : c));
+          state.map((c) => (c._id === card._id ? newCard : c)));
       })
       .catch((err) => console.log(err));
   }
 
   const handleCardDelete = (card) => {
-    api.deleteCard(card.cardId)
+    api.deleteCard(card._id)
       .then(() => {
-        setCards((arr) => arr.filter((currentCard) => currentCard.cardId !== card.cardId));
+        setCards((arr) => arr.filter((currentCard) => currentCard._id !== card._id));
         closeAllPopups();
       })
-      //   setCards((state) =>
-      //     state.filter((currentCard) => currentCard.cardId !== card.cardId));
-      // })
       .catch((err) => console.log(err));
   }
 
