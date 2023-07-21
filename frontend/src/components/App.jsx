@@ -35,12 +35,14 @@ function App() {
   const [isAuthOk, setIsAuthOk] = useState(false);
   const [isInfoToolTipOpened, setIsInfoToolTipOpened] = useState(false);
 
+  const jwt = localStorage.getItem("jwt");
+
   const handleCheckToken = () => {
-    const jwt = localStorage.getItem('jwt')
     if (jwt) {
       auth.checkToken(jwt)
         .then((res) => {
           if (res) {
+            api.getToken(jwt);
             setIsLoggedIn(true);
             navigate('/');
             setUserEmail(res.data.email);
@@ -48,12 +50,7 @@ function App() {
             setIsLoggedIn(false);
           }
         })
-        .catch((err) => {
-          if (err.status === 401) {
-            console.log("401 — Токен не передан или передан не в том формате");
-          }
-          console.log("401 — Переданный токен некорректен");
-        });
+        .catch((err) => console.log(err));
     }
   }
 
@@ -61,9 +58,10 @@ function App() {
     handleCheckToken();
   }, [isLoggedIn]);
 
+
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
+      Promise.all([api.getUserInfo({ authorization: `Bearer ${jwt}` }), api.getInitialCards({ authorization: `Bearer ${jwt}` })])
         .then(([user, cards]) => {
           setCurrentUser(user);
           setCards(cards);
@@ -87,7 +85,7 @@ function App() {
     api.deleteCard(card._id)
       .then(() => {
         setCards((state) =>
-          state.filter((currentCard) => currentCard._id !== card._id)); //новый массив с карточками у которых другой id
+          state.filter((currentCard) => currentCard._id !== card._id));
       })
       .catch((err) => console.log(err));
   }
@@ -124,7 +122,7 @@ function App() {
       .then(() => {
         setIsAuthOk(true);
         setIsLoggedIn(true);
-        navigate('/sing-in');
+        navigate('/sign-in');
       })
       .catch((err) => {
         setIsAuthOk(false);
@@ -138,12 +136,12 @@ function App() {
   const handleAuthorize = (email, password) => {
     auth.authorize(email, password)
       .then((res) => {
+        localStorage.setItem('jwt', res.token);
         setIsLoggedIn(true);
         setUserEmail(email);
         navigate('/');
-        localStorage.setItem('jwt', res.token);
       })
-      .catch((err) =>{ 
+      .catch((err) => {
         setIsAuthOk(false);
         setIsInfoToolTipOpened(true);
         if (err.status === 400) {
@@ -154,7 +152,7 @@ function App() {
       });
   }
 
-  const handleSingOut = () => {
+  const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('jwt');
   }
@@ -206,11 +204,11 @@ function App() {
       <div className="page">
         <Header
           userEmail={userEmail}
-          handleSingOut={handleSingOut}
+          handleSignOut={handleSignOut}
         />
         <Routes>
           <Route
-            path="/sing-up"
+            path="/sign-up"
             element={
               <div>
                 <Register
@@ -220,7 +218,7 @@ function App() {
             }
           />
           <Route
-            path="/sing-in"
+            path="/sign-in"
             element={
               <div>
                 <Login
@@ -231,7 +229,7 @@ function App() {
           />
           <Route
             path="*"
-            element={isLoggedIn ? <Navigate to='/' /> : <Navigate to='/sing-up' />}
+            element={isLoggedIn ? <Navigate to='/' /> : <Navigate to='/sign-up' />}
           />
           <Route
             path="/"

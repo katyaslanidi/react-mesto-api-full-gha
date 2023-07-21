@@ -12,24 +12,19 @@ class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
     }
-    getUserInfo() {
+    getUserInfo(headers = this._headers) {
         return fetch(`${this._baseUrl}/users/me`, {
-            method: "GET",
-            credentials: "include",
-            headers: this._headers,
+            headers: headers,
         }).then((res) => this._getResponse(res));
     }
-    getInitialCards() {
+    getInitialCards(headers = this._headers) {
         return fetch(`${this._baseUrl}/cards`, {
-            method: "GET",
-            credentials: "include",
-            headers: this._headers,
+            headers: headers,
         }).then((res) => this._getResponse(res));
     }
     editUserInfo(data) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "PATCH",
-            credentials: "include",
             headers: this._headers,
             body: JSON.stringify({
                 name: data.name,
@@ -40,7 +35,6 @@ class Api {
     addNewCard({ name, link }) {
         return fetch(`${this._baseUrl}/cards`, {
             method: "POST",
-            credentials: "include",
             headers: this._headers,
             body: JSON.stringify({
                 name,
@@ -51,28 +45,24 @@ class Api {
     deleteCard(id) {
         return fetch(`${this._baseUrl}/cards/${id}`, {
             method: "DELETE",
-            credentials: "include",
             headers: this._headers,
         }).then((res) => this._getResponse(res));
     }
     addLikeCard(id) {
         return fetch(`${this._baseUrl}/cards/${id}/likes`, {
             method: "PUT",
-            credentials: "include",
             headers: this._headers,
         }).then((res) => this._getResponse(res));
     }
     deleteLikeCard(id) {
         return fetch(`${this._baseUrl}/cards/${id}/likes`, {
             method: "DELETE",
-            credentials: "include",
             headers: this._headers,
         }).then((res) => this._getResponse(res));
     }
     editProfileImage(avatar) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
-            credentials: "include",
             headers: this._headers,
             body: JSON.stringify(avatar),
         }).then((res) => this._getResponse(res));

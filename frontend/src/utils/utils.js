@@ -11,6 +11,6 @@
 //   url: 'http://api.katyaslanidi.mesto.nomoredomains.xyz',
 //   headers: {
 //       "Content-Type": 'application/json',
-//       authorization: `${jwt}`,
+//       "authorization": `${jwt}`,
 //   },
 // };

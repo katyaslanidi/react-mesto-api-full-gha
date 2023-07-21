@@ -4,14 +4,12 @@ class Authorization {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
   }
-
   _getResponse(res) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`${res.status}`);
   }
-
   register(email, password) {
     return fetch(this._baseUrl + '/signup', {
       method: 'POST',
@@ -23,10 +21,9 @@ class Authorization {
         password: password,
         email: email,
       }),
-      
+
     }).then((res) => this._getResponse(res));
   }
-
   authorize(email, password) {
     return fetch(this._baseUrl + '/signin', {
       method: 'POST',
@@ -46,13 +43,12 @@ class Authorization {
         return data;
       });
   };
-
   checkToken(jwt) {
     return fetch(this._baseUrl + '/users/me', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
+        'Authorization': `Bearer ${jwt}`,
       },
     }).then((res) => this._getResponse(res));
   }
