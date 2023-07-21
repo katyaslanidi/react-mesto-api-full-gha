@@ -77,7 +77,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: "http://api.katyaslanidi.mesto.nomoredomains.xyz",
+    baseUrl: "https://api.katyaslanidi.mesto.nomoredomains.xyz",
     headers: {
         "Content-Type": "application/json",
     },

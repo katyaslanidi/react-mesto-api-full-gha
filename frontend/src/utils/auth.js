@@ -1,4 +1,4 @@
-const BASE_URL = 'http://api.katyaslanidi.mesto.nomoredomains.xyz';
+const BASE_URL = 'https://api.katyaslanidi.mesto.nomoredomains.xyz';
 
 class Authorization {
   constructor(baseUrl) {
