@@ -26,20 +26,14 @@ class Api {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "PATCH",
             headers: this._headers,
-            body: JSON.stringify({
-                name: data.name,
-                about: data.about,
-            }),
+            body: JSON.stringify(data),
         }).then((res) => this._getResponse(res));
     }
-    addNewCard({ name, link }) {
+    addNewCard(data) {
         return fetch(`${this._baseUrl}/cards`, {
             method: "POST",
             headers: this._headers,
-            body: JSON.stringify({
-                name,
-                link,
-            }),
+            body: JSON.stringify(data),
         }).then((res) => this._getResponse(res));
     }
     deleteCard(id) {

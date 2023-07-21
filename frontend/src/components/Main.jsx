@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { useContext } from 'react';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -29,15 +29,17 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
                     onClick={onAddPlace}></button>
             </section>
             <section className="elements">
-                {cards.map((card) => {
-                    return (<Card
-                        card={card}
-                        key={card._id}
-                        onCardClick={onCardClick}
-                        onCardLike={onCardLike}
-                        onCardDelete={onCardDelete}
-                    />)
-                })}
+                {
+                    cards.map((card) => (
+                        <Card
+                            key={card.cardId}
+                            card={card}
+                            onCardClick={onCardClick}
+                            onCardLike={onCardLike}
+                            onCardDelete={onCardDelete}
+                        />
+                    ))
+                }
             </section>
         </main>
     );

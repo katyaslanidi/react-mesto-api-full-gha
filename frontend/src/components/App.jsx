@@ -37,56 +37,80 @@ function App() {
 
   const jwt = localStorage.getItem("jwt");
 
-  const handleCheckToken = () => {
+  // const handleCheckToken = () => {
+  //   if (jwt) {
+  //     auth.checkToken(jwt)
+  //       .then((res) => {
+  //         if (res) {
+  //           api.getToken(jwt);
+  //           setIsLoggedIn(true);
+  //           navigate('/');
+  //           setUserEmail(res.email);
+  //         } else {
+  //           setIsLoggedIn(false);
+  //         }
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   handleCheckToken();
+  // }, [isLoggedIn]);
+
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     Promise.all([api.getUserInfo(), api.getInitialCards({ authorization: `Bearer ${jwt}` })])
+  //       .then((res) => {
+  //         setCurrentUser(res.user);
+  //         setCards(res.cards.reverse());
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [isLoggedIn]);
+
+useEffect(() => {
     if (jwt) {
       auth.checkToken(jwt)
         .then((res) => {
-          if (res) {
-            api.getToken(jwt);
-            setIsLoggedIn(true);
-            navigate('/');
-            setUserEmail(res.data.email);
-          } else {
-            setIsLoggedIn(false);
-          }
+          api.getToken(jwt);
+          setUserEmail(res.email);
+          setIsLoggedIn(true);
+          setCurrentUser(res);
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
+
+      api.getInitialCards({ authorization: `Bearer ${jwt} `})
+        .then((res) => {
+          console.log(typeof res, res);
+          setCards(res);
         })
         .catch((err) => console.log(err));
     }
-  }
-
-  useEffect(() => {
-    handleCheckToken();
-  }, [isLoggedIn]);
-
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      Promise.all([api.getUserInfo(), api.getInitialCards({ authorization: `Bearer ${jwt}` })])
-        .then(([user, cards]) => {
-          setCurrentUser(user);
-          setCards(cards);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [isLoggedIn]);
+  }, [jwt]);
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card.cardId, !isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((c) => c._id === card._id ? newCard : c));
+          state.map((c) => c.cardId === card.cardId ? newCard : c));
       })
       .catch((err) => console.log(err));
   }
 
   const handleCardDelete = (card) => {
-    api.deleteCard(card._id)
+    api.deleteCard(card.cardId)
       .then(() => {
-        setCards((state) =>
-          state.filter((currentCard) => currentCard._id !== card._id));
+        setCards((arr) => arr.filter((currentCard) => currentCard.cardId !== card.cardId));
+        closeAllPopups();
       })
+      //   setCards((state) =>
+      //     state.filter((currentCard) => currentCard.cardId !== card.cardId));
+      // })
       .catch((err) => console.log(err));
   }
 
@@ -155,6 +179,7 @@ function App() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('jwt');
+    setUserEmail("");
   }
 
   const handleEditProfileClick = () => {
