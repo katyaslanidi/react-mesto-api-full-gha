@@ -61,7 +61,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([api.getUserInfo({ authorization: `Bearer ${jwt}` }), api.getInitialCards({ authorization: `Bearer ${jwt}` })])
+      Promise.all([api.getUserInfo(), api.getInitialCards({ authorization: `Bearer ${jwt}` })])
         .then(([user, cards]) => {
           setCurrentUser(user);
           setCards(cards);

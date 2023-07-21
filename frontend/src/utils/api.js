@@ -12,9 +12,9 @@ class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
     }
-    getUserInfo(headers = this._headers) {
+    getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
-            headers: headers,
+            headers: this._headers,
         }).then((res) => this._getResponse(res));
     }
     getInitialCards(headers = this._headers) {
