@@ -46,9 +46,8 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
-  const cardId = req.params;
   Card.findByIdAndUpdate(
-    cardId,
+    req.params.cardId,
     {
       $addToSet: { likes: req.user._id },
     },
@@ -60,7 +59,7 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         next(new NotFound('Пользователь не найден'));
       }
-      res.status(200).send(card);
+      res.status(200).send({card});
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
@@ -72,9 +71,8 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
-  const cardId = req.params;
   Card.findByIdAndUpdate(
-    cardId,
+    req.params.cardId,
     {
       $pull: { likes: req.user._id },
     },
@@ -86,7 +84,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         next(new NotFound('Пользователь не найден'));
       }
-      res.send(card);
+      res.status(200).send({card});
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
