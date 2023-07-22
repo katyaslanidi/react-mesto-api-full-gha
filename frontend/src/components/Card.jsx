@@ -8,7 +8,6 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
     const isOwn = card.owner === currentUser._id;
 
-    // console.log(card, card.likes, card._id);
     const isLiked = card.likes.some((i) => i === currentUser._id);
 
     const cardLikeButtonClassName = (

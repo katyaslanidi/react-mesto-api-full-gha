@@ -7,7 +7,6 @@ const loginRouter = require('./signin');
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');
 
-// const { NotFound } = require('../errors/errors');
 const NotFound = require('../errors/NotFoundError');
 
 router.use('/', registrationRouter);

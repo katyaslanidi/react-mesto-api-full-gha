@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Card = require('../models/card');
-// const { BadRequest, NotFound, ForbiddenError } = require('../errors/errors');
 const BadRequest = require('../errors/BadRequestError');
 const NotFound = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
@@ -17,9 +16,11 @@ module.exports.createCard = (req, res, next) => {
     .then((card) => res.status(201).send(card))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        return next(new BadRequest('Переданы некорректные данные'))
-      } else next(err);
-    })
+        next(new BadRequest('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.deleteCard = (req, res, next) => {
@@ -37,7 +38,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .then((deletedCard) => {
       if (!deletedCard) {
-        return next(new NotFound('Карточка уже удалена'));
+        next(new NotFound('Карточка уже удалена'));
       }
       res.send(deletedCard);
     })
@@ -46,40 +47,54 @@ module.exports.deleteCard = (req, res, next) => {
 
 module.exports.likeCard = (req, res, next) => {
   const { cardId } = req.params;
-  const { userId } = req.user;
+  const { userId } = req.user._id;
   Card.findByIdAndUpdate(
     cardId,
-    { $addToSet: { likes: userId } },
-    { new: true },)
+    {
+      $addToSet: { likes: userId },
+    },
+    {
+      new: true,
+    },
+  )
     .then((card) => {
       if (!card) {
-        return next(new NotFound('Пользователь не найден'));
+        next(new NotFound('Пользователь не найден'));
       }
       res.status(200).send(card);
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        return next(new BadRequest('Переданы некорректные данные'))
-      } else next(err);
-    })
+        next(new BadRequest('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
-  const { userId } = req.user;
+  const { userId } = req.user._id;
   Card.findByIdAndUpdate(
     cardId,
-    { $pull: { likes: userId } },
-    { new: true },)
+    {
+      $pull: { likes: userId },
+    },
+    {
+      new: true,
+    },
+  )
     .then((card) => {
       if (!card) {
-        return next(new NotFound('Пользователь не найден'));
+        next(new NotFound('Пользователь не найден'));
       }
       res.send(card);
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        return next(new BadRequest('Переданы некорректные данные'))
-      } else next(err);
-    })
+        next(new BadRequest('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
