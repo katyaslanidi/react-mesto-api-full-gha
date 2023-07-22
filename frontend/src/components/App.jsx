@@ -57,6 +57,34 @@ function App() {
     }
   }, [jwt]);
 
+  const handleSignOut = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('jwt');
+    setUserEmail("");
+  }
+
+  const handleEditProfileClick = () => {
+    setEditProfilePopup(true);
+  }
+  const handleAddPlaceClick = () => {
+    setAddPlacePopup(true);
+  }
+  const handleEditAvatarClick = () => {
+    setEditAvatarPopup(true);
+  }
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+  }
+
+  const closeAllPopups = () => {
+    setEditProfilePopup(false);
+    setAddPlacePopup(false);
+    setEditAvatarPopup(false);
+    setIsInfoToolTipOpened(false);
+    setSelectedCard({});
+  }
+
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i === currentUser._id);
 
@@ -139,33 +167,33 @@ function App() {
       });
   }
 
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('jwt');
-    setUserEmail("");
-  }
+  // const handleSignOut = () => {
+  //   setIsLoggedIn(false);
+  //   localStorage.removeItem('jwt');
+  //   setUserEmail("");
+  // }
 
-  const handleEditProfileClick = () => {
-    setEditProfilePopup(true);
-  }
-  const handleAddPlaceClick = () => {
-    setAddPlacePopup(true);
-  }
-  const handleEditAvatarClick = () => {
-    setEditAvatarPopup(true);
-  }
+  // const handleEditProfileClick = () => {
+  //   setEditProfilePopup(true);
+  // }
+  // const handleAddPlaceClick = () => {
+  //   setAddPlacePopup(true);
+  // }
+  // const handleEditAvatarClick = () => {
+  //   setEditAvatarPopup(true);
+  // }
 
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-  }
+  // const handleCardClick = (card) => {
+  //   setSelectedCard(card);
+  // }
 
-  const closeAllPopups = () => {
-    setEditProfilePopup(false);
-    setAddPlacePopup(false);
-    setEditAvatarPopup(false);
-    setIsInfoToolTipOpened(false);
-    setSelectedCard({});
-  }
+  // const closeAllPopups = () => {
+  //   setEditProfilePopup(false);
+  //   setAddPlacePopup(false);
+  //   setEditAvatarPopup(false);
+  //   setIsInfoToolTipOpened(false);
+  //   setSelectedCard({});
+  // }
 
   useEffect(() => {
     const handleEscapeKey = (evt) => {

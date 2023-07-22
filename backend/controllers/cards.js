@@ -59,7 +59,7 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         next(new NotFound('Пользователь не найден'));
       }
-      res.status(200).send({card});
+      res.status(200).send(card);
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
@@ -84,7 +84,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         next(new NotFound('Пользователь не найден'));
       }
-      res.status(200).send({card});
+      res.status(200).send(card);
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
