@@ -31,11 +31,13 @@
 * Возможность открыть фотографии в полном размере
 
 ## Ссылки на проект
-1. [Репозиторий Api](https://github.com/katyaslanidi/express-mesto-gha)
-2. [Репозиторий Frontend](https://github.com/katyaslanidi/react-mesto-auth)
+* [Репозиторий Api](https://github.com/katyaslanidi/express-mesto-gha)
+* [Репозиторий Frontend](https://github.com/katyaslanidi/react-mesto-auth)
+  
 _На данный момент ВМ приостановленна_
-3. IP-адрес: 51.250.64.149
-4. [Frontend](https://katyaslanidi.mesto.nomoredomains.xyz)
-5. [Backend](https://api.katyaslanidi.mesto.nomoredomains.xyz)
+
+* IP-адрес: 51.250.64.149
+* [Frontend](https://katyaslanidi.mesto.nomoredomains.xyz)
+* [Backend](https://api.katyaslanidi.mesto.nomoredomains.xyz)
 
 ### Статус проекта: завершен
