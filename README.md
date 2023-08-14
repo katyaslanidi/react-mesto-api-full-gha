@@ -34,7 +34,7 @@
 * [Репозиторий Api](https://github.com/katyaslanidi/express-mesto-gha)
 * [Репозиторий Frontend](https://github.com/katyaslanidi/react-mesto-auth)
   
-_На данный момент ВМ приостановленна_
+_На данный момент ВМ приостановлена_
 
 * IP-адрес: 51.250.64.149
 * [Frontend](https://katyaslanidi.mesto.nomoredomains.xyz)
